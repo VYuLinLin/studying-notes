@@ -1,0 +1,48 @@
+# DOS命令学习笔记-window平台
+
+win + r => cmd    进入cmd命令行环境
+ipconfig          显示Windows IP 配置
+
+cd/		            切换到当前盘符的根目录
+cd ../或 cd ..    切换到上一级目录
+cd../../	        切换到上两级目录去，以此类推
+cd fileName       切换到指定路径或文件目录
+cd C: 或 c:       切换到C磁盘, windows不分大小写
+cd d: 或 D:       切换到D磁盘, windows不分大小写
+cd/d 任意路径	     切换到任意路径下
+
+type nul>fileName.js                创建文件
+md fileName 或 mkdir fileName       创建文件夹
+rd fileName       删除文件或空文件夹
+rd /s /q fileName 删除文件或文件夹  /s 强制删除  /q 安静模式
+del fileName      提示性删除文件夹下的所有子集
+
+copy con E:\start.cmd	回车后在该目录下创建一个文件，输入内容后按Ctrl + z + 回车
+
+cls               清屏
+
+shutdown -s -t 秒数	    定时关机
+shutdown -a		          取消定时关机
+
+--------------------------------------------------------------------------
+快捷方式：
+
+md src && cd src && type nul>index.js && cd ../ && type nul>index.html
+
+创建一个src文件夹
+进入src目录
+在src目录下创建一个index.js文件
+回到上一级目录
+创建一个index.html
+
+----------------------------------------------------
+node -v		    查看node.js版本
+npm -v		    查看npm版本
+mysql -v	    查看mysql版本
+
+----------------------------------------------------
+npm 命令学习
+
+npm install <moduleName>	  安装模块，加-g代表全局安装，install可以省略成i
+npm uninstall	<moduleName>	卸载模块
+
