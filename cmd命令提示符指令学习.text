@@ -46,3 +46,9 @@ npm 命令学习
 npm install <moduleName>	  安装模块，加-g代表全局安装，install可以省略成i
 npm uninstall	<moduleName>	卸载模块
 
+npx 一种npm包的执行器
+
+npm 5.2.0 以上的版本就会有 npx 了
+npx 会自动查找当前依赖包中的可执行文件，如果找不到，就会去 PATH 里找。如果依然找不到，就会帮你安装！
+npx 甚至支持运行远程仓库的可执行文件，如 npx github:piuccio/cowsay hello
+npx http-server 可以一句话帮你开启一个静态服务器！
