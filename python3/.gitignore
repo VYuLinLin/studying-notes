@@ -1,3 +1,0 @@
-# 避免git提交的文件夹
-node_modules
-__pycache__
