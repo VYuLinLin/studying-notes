@@ -165,19 +165,7 @@ Python 内置方法:
 	with open(filePath) as aliasName:
 		str = aliasName.read() # 字符串形式返回文件文本
 		lists = aliasName.readlines()  # 读取文件的每一行，返回列表
-		print(str) 		# 不能直接打印aliasName.read(),可以打印赋值后的变量
-
-
-
-
-
-
-
-
-
-
-
-
+		print(str) 	# 不能直接打印aliasName.read(),可以打印赋值后的变量
 
 
 
@@ -185,9 +173,9 @@ Python 内置方法:
 ------------------------------------------------------------------------------------------
 \'　'
 \"	"
-\a　‘bi’响一声
+\a	‘bi’响一声
 \b	退格
-\f　换页（在打印时）
+\f	换页（在打印时）
 \n	回车，光标在下一行
 \r	换行，光标在上一行
 \t	八个空格
