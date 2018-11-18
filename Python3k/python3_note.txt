@@ -167,8 +167,22 @@ Python 内置方法:
 		lists = aliasName.readlines()  # 读取文件的每一行，返回列表
 		print(str) 	# 不能直接打印aliasName.read(),可以打印赋值后的变量
 
+	with open(filePath, 'w') as fileObj:
+		fileObj.write('写入的内容')
 
-
+	open方法第二个参数表示打开文件的模式：
+		r 	只读，也是默认模式，光标在文件开头
+		r+	读写，不会自动创建文件,如果没有文件，会报fileNotFoundError错误
+		w	写入，不存在时自动创建，存在时内容会被重置
+		w+	写读，不存在时自动创建文件
+		a	附加，不存在时自动创建文件，写的内容会添加后末尾
+		a+  读写附加，不存在时自动创建文件，写的内容会添加后末尾
+   
+	open方法会返回一个file对象：
+		file.write('str')	写入内容
+		file.read()		读取文件的全部内容
+		file.readline()		返回一行
+		file.readlines([size])	返回包含size行的列表，未指定返回所有行
 
 ------------------------------------------------------------------------------------------
 \'　'
@@ -191,6 +205,24 @@ python编码时的注意事项：
 	类的第一个字母要大写
 	初始化类时__init__()方法第一个参数尽量用self
 	python中没有方法提升也没有变量提升
-	exit() 	#退出
-	help()	#进入帮助文档模式
-	quit	退出查看帮助模式
+---------------------------------------------------------------------------
+python 一些命令简介：
+	python --version	查看当前Python的安装版本
+	pip	--version		查看python的包管理器版本
+	where python		查看python的安装路径
+	exit() 		退出
+	help()		进入帮助文档模式
+	quit		退出查看帮助模式
+
+pip 命令简介：
+	pip --help 		获取帮助
+	pip install -U pip	升级pip
+	pip install SomePackage		安装包
+	pip uninstall SomePackage	卸载包
+	pip install -U SomePackage	升级指定的包
+	pip search SomePackage		搜索包
+	pip show -f SomePackage		查看指定包的详细信息
+	pip freeze or pip list 		列出已安装的包
+	pip list -o 	查看可升级的包
+
+----------------------------------------------------------------------------
