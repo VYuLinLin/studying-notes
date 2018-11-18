@@ -236,7 +236,11 @@
 #     - 编辑模式，允许你往单元中键入代码或文本；这时的单元框线是绿色的。
 #     - 命令模式，键盘输入运行程序命令；这时的单元框线是灰色。
 # - 安装可以使用python自带的pip包管理器安装：pip install jupyter
+# - 开启jupyter notebook的两种方法
+#     - window自带的命令行窗口输入jupyter notebook ，默认为英文
+#     - 使用Git Bush窗口输入jupyter notebook ，默认中文
 # - 快捷键
+#     - 命令行窗口输入此命令开启jupyter笔记
 #     - Shift+Enter : 运行本单元，选中下个单元
 #     - Ctrl+Enter : 运行本单元
 #     - Alt+Enter : 运行本单元，在其下插入新单元
