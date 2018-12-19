@@ -1,0 +1,26 @@
+移动端开发注意事项说明
+
+iPhone
+
+日期格式：
+	
+	iPhone中无法解释 YYYY-MM-DD HH:mm:ss 或者YYYY/MM/DD HH:mm:ss这样的时间格式，
+	而谷歌火狐等浏览器对这样的格式做了扩展，
+
+	iPhone中的所支持的格式为 YYYY,MM, DD,HH,mm,ss
+
+iframe兼容：
+	ios12.0.0及以上版本iframe框架内滑动返回会造成页面卡死的bug
+	属ios兼容问题，暂无解决办法，只能通过调用原生，限制在iframe框架的页面内滑动返回
+
+input type=checkbox 事件：
+	Android先触发click，后触发change
+	ios相反
+
+
+屏幕适配方案：
+第一种：屏幕越大看的越多
+第二种：屏幕越大显示越大（所有布局和单位都使用rem）
+
+一般rem都是给body设置基础单位，所以项目有使用rem的时候，一些特殊展示样式必须使用固定单位（px），否则会有样式兼容问题。
+如：css实现一个小圆点，图片宽度，字体icon，必须固定大小的字体等
