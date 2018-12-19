@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+/Python3k/__pycache__/
+/Python3k/class/
+/Python3k/.ipynb_checkpoints/
