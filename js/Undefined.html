@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>undefined</title>
+</head>
+<body>
+  <script>
+    // 函数无返回值，默认为undefined
+    var a = function() {
+      return
+    }
+    console.log(typeof a(), a()) // 'undefined' undefined
+    
+    // 变量声名后未赋值与复制为undefined的变量有本质区别
+    var b;
+    console.log(b) // undefined
+    // console.log(c) // 报错
+    console.log(typeof b, typeof c) // 'undefined' 'undefined'
+
+    let n = 123
+    Number.prototype.sss = () => {return '1234'}
+    console.log(n.sss())
+  </script>
+</body>
+</html>
