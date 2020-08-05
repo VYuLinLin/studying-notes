@@ -64,11 +64,11 @@ func main() {
 		println("  ")
 	}
 
-	labelExmple()
+	labelExample()
 
-	gotoExmple()
+	gotoExample()
 
-	gotoExmple1()
+	gotoExample1()
 
 	i := 0
 	for { //since there are no checks, this is an infinite loop
@@ -139,7 +139,7 @@ func Season(month int) string {
 }
 
 // 标签循环
-func labelExmple() {
+func labelExample() {
 LABEL1:
 	for i := 0; i <= 5; i++ {
 		for j := 0; j <= 5; j++ {
@@ -153,7 +153,7 @@ LABEL1:
 }
 
 // goto 循环
-func gotoExmple() {
+func gotoExample() {
 	i := 0
 HERE:
 	f.Printf("goto%d\n", i)
@@ -164,7 +164,7 @@ HERE:
 	goto HERE
 }
 
-func gotoExmple1() {
+func gotoExample1() {
 	a := 1
 	b := 9
 	goto TARGET // compile error

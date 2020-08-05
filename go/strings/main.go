@@ -21,9 +21,9 @@ func main() {
 
 	indexExample()
 
-	sliceExmple()
+	sliceExample()
 
-	strconvExmple()
+	strconvExample()
 }
 
 func indexExample() {
@@ -46,7 +46,7 @@ func indexExample() {
 	// The position of "Burger" is: -1
 }
 
-func sliceExmple() {
+func sliceExample() {
 	str := "The quick brown fox jumps over the lazy dog"
 	sl := strings.Fields(str)
 	fmt.Printf("Splitted in slice: %v\n", sl)
@@ -71,7 +71,7 @@ func sliceExmple() {
 	// sl2 joined by ;: GO1;The ABC of Go;25
 }
 
-func strconvExmple() {
+func strconvExample() {
 	var orig string = "666"
 	var an int
 	var newS string

@@ -6,10 +6,10 @@ import (
 )
 
 func main() {
-	timeExmple()
+	timeExample()
 }
 
-func timeExmple() {
+func timeExample() {
 	t := time.Now()
 	f.Println(t)                             // 2020-07-13 11:54:09.1173123 +0800 CST m=+0.001995701
 	f.Println(t.Day(), t.Month(), t.Year())  // 13 July 2020
