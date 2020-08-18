@@ -1,0 +1,3 @@
+abc     12  "xyz"
+func    23  100
+go      32  xyz

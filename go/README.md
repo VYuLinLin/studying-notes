@@ -49,8 +49,8 @@ Go语言数据的基本类型：
     3. float    浮点型
         1. float32  +- 1e-45 -> +- 3.4 * 1e38   精确到小数点后7位
         2. float64  +- 5 1e-324 -> 107 1e308    精确到小数点后15位，推荐优先使用
-4. 数组             值类型，使用中括号[]，类型统一
-5. 切片（slice）    引用类型，对数组的一个连续片段的引用
+4. 数组    值类型，长度固定，类型统一，初始化 [3]int
+5. 切片    引用类型，长度可变，类型统一，对数组的一个连续片段的引用。初始化 []int
 6. Map              引用类型，无序，一个由key和value组成的类型统一的键值对结构数据
 7. 结构体（struct ）    值类型，不限类型的属性和值组成
 
@@ -85,7 +85,10 @@ Go语言注意事项：
 25. 在一个结构体中，每种数据类型，只能有一个匿名字段
 26. 结构体中，字段名，外层名字会覆盖内层名字，但是在同一级别有两个相同的名字时，调用时会报错，必须程序员自己修正
 27. 不要再String()方法里面调用涉及String()方法的方法，会导致意料之外的错误，比如隐式的循环调用，会导致内存溢出。
-28. 
+28. switch case语法中，可以不用像js中那样使用break
+29. 不要通过共享内存来通信，而通过通信来共享内存
+30. 不要使用全局变量或者共享内存，因为会在并发运算的时候带来不确定性
+
 ---
 
 基本知识：
@@ -224,7 +227,78 @@ Go语言注意事项：
 - 数据封装，通过标识符的首字母大小写，区分包外和包内可见
 - 继承，通过组合实现（内嵌一个以上的类型）
 - 多态，通过接口实现（某个类型的实例可以赋给它所实现的任意接口类型的变量）
+- panic 一个中止程序的运行时错误。在多层嵌套的函数中调用panic，可以马上中止当前函数的执行，所有的defer语句都会保证执行，并把控制权交给接收到panic的函数调用者。这样依次冒泡（执行每层的defer），直到最顶层，程序崩溃。
+- recover   从panic或错误场景中恢复
+- panic 会导致栈被展开，知道defer修饰的recover()被调用或者程序中止
+- go test file_name_test.go --chatty    编译测试程序，--chartty或 -v 选项，会打印每个执行的测试函数和测试状态
+- 用testing包中的类型和函数做基准测试时，测试代码必须以Benchmark开头的函数，并接收一个*testing.B类型的参数
+- Go程序包中必须有的main函数也可以看做是一个携程，尽管没有用go来启动
+- 协程，通过关键字go调用一个函数或方法来实现
+- 如果在某一时间只有一个协程在执行，不要设置GOMAXPROCS
+- GOMAXPROCS等同于（并发的）线程数量。
 ————————————————
+
+日常开发中，常用的包：
+
+- fmt包，其中F开头的Print函数可以直接写入任何io.Writer，包括文件
+    - Println   换行打印
+    - Printf    格式化打印，会自动调用String()方法
+    - Errorf    与Printf一样，不同的是它会用信息生成一个错误对象，并返回
+    - Fprintln  在参数之间添加空格，并追加换行符。
+    - Fprintf(w io.Writer, format string, a ...interface{}) (n int, err error)  依据指定的格式，向第一个参数内写入字符串
+    - Scanln    扫描输入的文本，以空格分隔参数，直到遇到换行
+    - Scanf     格式化扫描,第一个参数用作格式字符串，用来决定如何读取
+    - Sscan或Sscan开头的函数，从字符串读取，其他与Scanf相同。
+    - Fscanln   
+- os 流程包
+    - Stdin（standard intput）     标准输入
+    - Stdout（standard output）    标准输出
+    - File      一个打开文件的描述符，也叫文件句柄
+    - Open      打开一个文件，参数是文件名
+    - OpenFile  打开一个文件，有三个参数，分别是：
+        1. 文件名
+        2. 一个或多个标志用|分隔
+        3. 使用的文件权限（注意：在读文件的时候，文件的权限是被忽略的，可以用0代替，而在写文件时，不管是 Unix 还是 Windows，都需要使用 0666。）
+    - O_RDONLY  只读
+    - O_WRONLY  只写
+    - O_RDWR    可读可写
+    - O_APPEND  后面追加数据
+    - O_CREATE  创建：如果不存在就创建
+    - O_EXCL    使用的O_CREATE，文件必须不存在
+    - O_SYNC    打开同步I/O
+    - O_TRUNC   截断：如果文件已存在，就将文件的长度截为0（全部删除）
+    - Exit(v)   终止运行程序
+
+- io    为I/O原语提供基本接口。
+    - EOF（end of file）    文件的结束符
+    - Exit  退出当前程序
+- bufio
+    - Reader    阅读器为io实现缓冲。读者对象。
+    - NewReader 返回一个新的阅读器，它的缓冲区具有默认大小。
+    - Copy(dst, src)      src拷贝到dst
+- io/ioutil
+    - ReadFile  将整个文件的内容读到一个字符串里，返回一个[]byte
+    - WriteFile 将[]byte的值写入文件，如果没有此文件，会新创建一个
+
+- path/filepath 提供跨平台的函数，处理文件名和路径
+    - Base      获得路径中的最后一个元素，不包含后面的分隔符。如：filename := filepath.Base(path)
+- compress  提供读取压缩文件的功能，支持的格式：bzip2、flate、gzip、lzw 和 zlib
+- flag 解析命令行选项。替换基本常量
+    - Parse()   扫描列表并设置flags
+    - Arg(i)    表示第i个参数，Parse()之后，全部可用
+    - Narg()    返回参数的数量
+    - Bool()    定义了一个默认值是bool类型的flag
+    - PrintDefaults()   打印flag的使用帮助信息
+
+- encoding/json
+    - Marshal(v interface{}) ([]byte, error) 编码成json结构
+    - Unmarshal(data []byte, v interface{}) error   把json解码成数据结构
+    - MarshalforHTML()  对数据执行HTML转码
+    - Decoder()     常用JSON数据流的读
+    - Encoder()     常用JSON数据流的写
+    - NewEncoder(w io.wWriter) *Encoder     返回的Encoder类型的指针可调用方法Encode(v interface{})，将数据对象v的json编码写入io.Writer（w）中
+————————————————
+
 优先级     运算符
 
  7      ^ !
@@ -245,6 +319,7 @@ Go语言注意事项：
 
 替换标识符
 
+%f      float
 %d      数字
 %s      字符串
 %T      格式化描述符
@@ -252,7 +327,7 @@ Go语言注意事项：
 
 ------------------------------------------------------
 未能深刻理解的点：
-指针、method、interface
+指针、method、interface、文件读写、类型转换
 
 ------------------------------------------
 Go语言中包含的所属有类型
