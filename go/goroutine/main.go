@@ -15,6 +15,13 @@ func main() {
 	fmt.Println("About to sleep in main()")
 	time.Sleep(10 * 1e9)
 	fmt.Println("At the end of main()")
+
+	// 习惯用法： 通道工厂模式
+	stream := pump()
+	go suck(stream)
+	// 或
+	// go suck(pump())
+	time.Sleep(1e9)
 }
 func longWait() {
 	fmt.Println("Beginning longWait")
@@ -25,4 +32,22 @@ func shortWait() {
 	fmt.Println("Beginning shortWait")
 	time.Sleep(2 * 1e9)
 	fmt.Println("End of shortWait")
+}
+
+func pump() chan int {
+	ch := make(chan int)
+	go func() {
+		for i := 0; ; i++ {
+			ch <- i
+		}
+	}()
+	return ch
+}
+
+func suck(ch chan int) {
+	go func() {
+		for v := range ch {
+			fmt.Println(v)
+		}
+	}()
 }

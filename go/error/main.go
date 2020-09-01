@@ -11,6 +11,7 @@ func badCall() {
 }
 func test() {
 	defer func() {
+		fmt.Println("defer recover")
 		if e := recover(); e != nil {
 			fmt.Printf("panicing %s\r\n", e)
 		}

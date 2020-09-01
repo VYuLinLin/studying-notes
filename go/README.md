@@ -88,6 +88,8 @@ Go语言注意事项：
 28. switch case语法中，可以不用像js中那样使用break
 29. 不要通过共享内存来通信，而通过通信来共享内存
 30. 不要使用全局变量或者共享内存，因为会在并发运算的时候带来不确定性
+31. 通过打印状态来确定通道的发送和接口顺序是不准确的，因为打印状态和通道实际发生读写的时间延迟会导致和真实发生的顺序不同。
+32. Go语言中，函数都是按照值传递，即passed by value。如果函数调用时，参数是一个指针，则Go会把指针进行隐式转换得到value，但返回来则不行。
 
 ---
 
@@ -145,6 +147,7 @@ Go语言注意事项：
     3. t.Month()    月
     4. t.Year()     年
     5. t.Format(layout string) string   根据一个格式化字符串来将一个时间 t 转换为相应格式的字符串，预定义格式time.ANSIC 或 time.RFC822
+    6. Ticker(duration)       以指定的时间间隔重复的向通道C发送时间值
 
 - 一个指针变量可以指向任何一个值的内存地址
 - 指针未分配到任何变量时，值为 nil ，一般指针变量缩写为 ptr
@@ -157,7 +160,7 @@ Go语言注意事项：
 - defer 关键字可以延迟函数在调用之后才执行
 - 当有多个defer注册时，执行顺序为逆序执行（类似于栈，先进后出）
 - 内置函数：
-    1. close    用于管道通信
+    1. close(ch)    关闭一个通道，该通道必须是双向或者仅发送的。
     2. len      返回某个类型的长度和数量（字符串、数组、切片、map、管道）
     3. cap      返回某个类型的最大容量（只能用于切片、map）
     4. new      分配内存，用于值类型和用户自定义的类型
@@ -236,6 +239,25 @@ Go语言注意事项：
 - 协程，通过关键字go调用一个函数或方法来实现
 - 如果在某一时间只有一个协程在执行，不要设置GOMAXPROCS
 - GOMAXPROCS等同于（并发的）线程数量。
+- 通道的声明格式： var identifier chan datatype
+- 通道（channel）属于引用类型，可以用make()函数分配内存，例：int1 := make(chan int)
+- 声明带缓冲的通道，例：    buf := 100; ch1 := make(chan string, buf)
+- 流向通道（发送）  例：    ch <- int1
+- 通道流出（接收）  例：    int2 := <- ch
+- 只发送的通道      例：    var send_only chan<- int
+- 只接收的通道      例：    var recv_only <-chan int
+- 通道可以显示的关闭，只有发送者需要关闭通道，接收者永远不会需要。
+- 使用锁的情景：
+    - 访问共享数据结构中的缓存信息
+    - 保存应用程序上下文和状态信息数据
+- 使用通道的情景：
+    - 与异步操作的结果进行交互
+    - 分发任务
+    - 传递数据所有权
+
+- 信号量模式,一般做法是在 main 函数的最后放置一个{},也可以使用通道让 main 程序等待协程完成。
+
+
 ————————————————
 
 日常开发中，常用的包：
@@ -298,6 +320,15 @@ Go语言注意事项：
     - Encoder()     常用JSON数据流的写
     - NewEncoder(w io.wWriter) *Encoder     返回的Encoder类型的指针可调用方法Encode(v interface{})，将数据对象v的json编码写入io.Writer（w）中
 ————————————————
+# 断点调试（VS Code）
+1. 安装delve
+windows / linux / OSX  
+go get -u github.com/go-delve/delve/cmd/dlv
+
+2. 设置launch.json 配置文件
+    [参考地址](https://chai2010.cn/advanced-go-programming-book/ch3-asm/ch3-09-debug.html)
+
+---
 
 优先级     运算符
 
@@ -325,11 +356,15 @@ Go语言注意事项：
 %T      格式化描述符
 %#v     实例的完整输出，包括它的字段
 
-------------------------------------------------------
+---
 未能深刻理解的点：
 指针、method、interface、文件读写、类型转换
 
-------------------------------------------
+# 其他大佬的理解
+- [关于Interface](https://sanyuesha.com/2017/07/22/how-to-understand-go-interface/)
+- 
+
+---
 Go语言中包含的所属有类型
     Bool
     Int
