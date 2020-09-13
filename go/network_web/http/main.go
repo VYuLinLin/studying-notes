@@ -18,8 +18,11 @@ func main() {
 	// err := http.ListenAndServe("localhost:5001", nil)
 
 	// 写法二
-	err := http.ListenAndServe("localhost:5001", http.HandlerFunc(HelloServer))
+	fmt.Println("starting serve")
+
+	err := http.ListenAndServe("localhost:5000", http.HandlerFunc(HelloServer))
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err.Error())
 	}
+	fmt.Println("ending serve")
 }
