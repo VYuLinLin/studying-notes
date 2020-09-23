@@ -19,13 +19,32 @@ Go 语言的特性：
 
 基础指令：
 
-- go version 查看 Go 版本信息
-- gofmt hello.world.go 打印格式化后的结果而不重写文件
-- gofmt -w hello.world.go 格式化并重写原代码
-- gofmt -w \*.go 会格式化并重写所有 Go 源文件
-- gofmt map1 会格式化并重写 map1 目录及其子目录下的所有 Go 源文件
-- gofmt -r '(a) -> a' –w \*.go 替换所有源文件中的(a) 为 a
+- ```go env``` 查看go所有的环境变量
+- ```go env GOPATH``` 查看 GOPATH 的系统路径
+- ```go version``` 查看 Go 版本信息
+- ```go clean```  删除编译生成的可执行文件
+- ```go run main.go```    先构建main.go文件里包含的程序，然后执行构建后的程序
+- ```gofmt hello.world.go``` 打印格式化后的结果而不重写文件
+- ```gofmt -w hello.world.go``` 格式化并重写原代码
+- ```gofmt -w \*.go``` 会格式化并重写所有 Go 源文件
+- ```gofmt map1``` 会格式化并重写 map1 目录及其子目录下的所有 Go 源文件
+- ```gofmt -r '(a) -> a' –w \*.go``` 替换所有源文件中的(a) 为 a
 
+依赖包管理
+  1. ```go mod init project_name``` 在项目的根目录初始化包管理，自动分析依赖，创建go.mod和go.sum
+  2. ```go mod tidy``` 自动分析依赖，自动添加和删除依赖
+  3. ```go mod vendor``` 创建vendor目录，将依赖拷贝到当前的vendor文件中
+  4. ```go mod download``` 手动下载依赖
+
+打包构建
+- ```go build main.go```在main.go所在的目录下，生成windows可执行的main.exe文件
+
+自动化构建工具 [goreleaser](https://github.com/goreleaser/goreleaser)
+  1. [下载](https://github.com/goreleaser/goreleaser/releases)
+  2. 在项目根目录使用```goreleaser init```初始化配置文件
+  3. 根据需要修改 .goreleaser.yml 文件，或保持默认配置
+  4. ```goreleaser --snapshot --skip-publish --rm-dist``` 打包并跳过发布
+  
 目前版本实现的三个 Go 工具
 
 1. go install 是安装 Go 包的工具，主要安装非标准库的包文件，将源文件编译成对象文件。
@@ -98,8 +117,9 @@ Go 语言注意事项：
 35. 当切片作为参数传递时,切记不要解引用切片。
 36. 永远不要使用一个指针指向一个接口类型，因为它已经是一个指针。
 37. 只有当代码中并发执行非常重要，才使用协程和通道。
-38.
-
+38. ```import "test/hello"```   这里的hello是指路径不是包名
+39. import 是按文件夹名来查找，一个文件夹下的所有文件都属于同一个包，所以函数变量不能重复。
+40. 包名统一使用小写，不建议使用驼峰和下划线（golint）
 ---
 
 基本知识：
@@ -404,7 +424,7 @@ Go 语言注意事项：
 ---
 
 未能深刻理解的点：
-指针、method、interface、文件读写、类型转换
+指针、reflect、method、interface、文件读写、类型转换
 
 # 其他大佬的理解
 
