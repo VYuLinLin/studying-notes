@@ -1,7 +1,9 @@
-package main
+package store
 
 import (
 	"sync"
+
+	. "../key"
 )
 
 type URLStore struct {
@@ -38,7 +40,7 @@ func (s *URLStore) Count() int {
 func (s *URLStore) Put(url string) string {
 	// 问题一：此处为什么要使用for循环
 	for {
-		key := genKey(s.Count()) // 生成短URL
+		key := GenKey(s.Count()) // 生成短URL
 		if s.Set(key, url) {
 			return key
 		}
