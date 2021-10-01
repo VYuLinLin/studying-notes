@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -12,7 +13,7 @@ func main() {
 	// sendData(ch) // fatal error: all goroutines are asleep - deadlock!
 	// getData(ch)
 	fmt.Println("main1")
-	// time.Sleep(1e9)
+	time.Sleep(1e9)
 	fmt.Println("main2")
 	// fmt.Println("\nmain: ", <-ch)
 	for {
@@ -53,5 +54,5 @@ func getData(ch chan string) {
 		}
 	}
 
-	fmt.Println("\ngetData2")
+	fmt.Println("\ngetData2") // 因为上面的循环是无限循环，所以此行代码永远不会执行
 }

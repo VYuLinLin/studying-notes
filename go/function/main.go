@@ -109,7 +109,7 @@ func typecheck(values ...interface{}) {
 		case float32:
 			println("我是float32 ", v)
 		case float64:
-			println("我是float64 ", v)
+			fmt.Println("我是float64 ", v)
 		case string:
 			println("我是string ", v)
 		case bool:

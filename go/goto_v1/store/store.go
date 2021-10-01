@@ -3,7 +3,7 @@ package store
 import (
 	"sync"
 
-	. "../key"
+	. "goto_v1/key"
 )
 
 type URLStore struct {
@@ -45,5 +45,4 @@ func (s *URLStore) Put(url string) string {
 			return key
 		}
 	}
-	return ""
 }

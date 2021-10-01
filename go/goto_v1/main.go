@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	. "./store"
+	"goto_v1/store"
 )
 
 const AddForm = `
@@ -14,7 +14,7 @@ const AddForm = `
 	</form>
 `
 
-var store = NewURLStore()
+var stores = store.NewURLStore()
 
 func main() {
 	http.HandleFunc("/", Redirect)
@@ -24,7 +24,7 @@ func main() {
 
 func Redirect(w http.ResponseWriter, r *http.Request) {
 	key := r.URL.Path[1:]
-	url := store.Get(key)
+	url := stores.Get(key)
 	if url == "" {
 		http.NotFound(w, r) // 404
 		return
@@ -39,6 +39,6 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, AddForm)
 		return
 	}
-	key := store.Put(url)
+	key := stores.Put(url)
 	fmt.Fprintf(w, "http://localhost:8888/%s", key)
 }

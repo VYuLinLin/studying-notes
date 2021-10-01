@@ -21,6 +21,8 @@ func main() {
 	f.Println(inP)  // 0xc000010098
 	f.Println(&inP) // 0xc000006030
 	f.Println(*inP) // 123
+
+	// 内存地址没有变，值变了
 	*inP = 321
 	f.Println(i, inP, &i) // 321 0xc000010098 0xc000010098
 	f.Println(a == *(&a)) // true
