@@ -51,9 +51,9 @@ Go 语言的特性：
 2. go fix 将 Go 代码从旧的发行版迁移到最新的发行版
 3. go test 是一个轻量级的单元测试框架
 
----
 
-Go 语言数据类型：
+## Go 语言数据类型：
+---
 - 基本类型
 1. bool 布尔类型
 2. string 字符串类型
@@ -90,9 +90,9 @@ Go 语言数据类型：
 - 引用类型：指针、slice切片、管道channel、接口interface、map、函数等
 
   特点：变量存储的是一个地址，这个地址对应的空间里才是真正存储的值，内存通常在堆中分配
----
 
-Go 语言注意事项：
+## Go 语言注意事项：
+---
 
 1. 不能使用单个下划线（ \_ ）作为标识符，实际上下划线（ \_ ）是一个只写变量。
 2. 字符串不能使用单引号。
@@ -140,9 +140,11 @@ Go 语言注意事项：
 44. fallthrough 必须在case语句中的最后一行。
 45. 关键字 continue 只能被用于for循环中
 46. 函数不能在其他函数内声明，除非是匿名函数
+47. 大数组传递给函数会消耗很多内存，建议传递数组的指针或使用数组的切片。
+
+## 基本知识：
 ---
 
-基本知识：
 
 - 使用 import 导入包后，可以定义或声明 0 或多个常量（const）、变量（var）、类型（type）
 - 使用关键字 func 定义函数
@@ -236,6 +238,7 @@ Go 语言注意事项：
 - slice2 := slice1[:cap(slice1)] 可以把切片扩展到最大
 - 修改切片中的值，会影响到原数组的值
 - 因为字符串是纯粹不可变的字节数组，所以他们也可以被切分成切片
+- 和数组一样，切片也可以组合成多维切片，但是，内层的切片必须单独分配（通过make函数）
 - new() 和 make() 的区别
   - new(T) 返回一个指向类型为 T，值为 0 的地址的指针，适用于值类型，如数组和结构体
   - make(T) 返回一个类型为 T 的初始值，适用于引用类型，如slice、map、channel
@@ -251,9 +254,14 @@ Go 语言注意事项：
 - \_, ok := map1[key1] 可以通过 ok 的 bool 值判断 map1 中是否有元素 key1。
 - delete(map1, key1) 删除 map1 中的 key1 元素，不存在 key1 时，不会报错
 - map 默认是无序的，不会自动排序
-- sort 常用的排序方法
-  1. Strings() 字符串排序
-  2. Ints() 整数排序
+- 数组或切片搜索一个元素时，必须先被排序，然后使用 SearchInts 函数搜索。
+- sort 包常用的方法
+  1. Strings(a []string) bool 字符串排序
+  2. Ints(a []int) bool 整数排序
+  3. Float64s(a []float64) bool 浮点数排序
+  4. SearchInts(a []int, n int) int 搜索元素，返回索引值，未搜索到时，返回len(a)
+  5. SearchFloat64s(a []float64, x float64) int 搜索浮点数切片
+  6. SearchStrings(a []string, x string) int 搜索字符串切片
 - import . "./pack1" 使用.作为包的别名时，可以省略包名，直接调用其中的变量或方法
 - import \_ "./pack1" 使用下划线导入包时，只会执行其中的 init 函数，并初始化全局变量
 - 结构体（struct）属于值类型，可以通过 new 函数创建
@@ -315,11 +323,10 @@ Go 语言注意事项：
   - 传递数据所有权
 
 - 信号量模式,一般做法是在 main 函数的最后放置一个{},也可以使用通道让 main 程序等待协程完成。
+- godoc -http=:8080 -goroot="." 在当前目录下生成一个本地包网页文档，包必须在src/路径下。sync_minutes=n 设置每n分钟自动更新文档
 
-————————————————
-
-日常开发中，常用的包：
-
+## 日常开发中，常用的包：
+---
 - fmt 包，其中 F 开头的 Print 函数可以直接写入任何 io.Writer，包括文件
   - Println 换行打印
   - Printf 格式化打印，会自动调用 String()方法
@@ -404,10 +411,8 @@ Go 语言注意事项：
     - http.StatusNotFound 404
     - http.StatusInternalServerError 500
 
-————————————————
-
-# 断点调试（VS Code）
-
+## 断点调试（VS Code）
+---
 1. 安装 delve
    windows / linux / OSX  
    go get -u github.com/go-delve/delve/cmd/dlv
@@ -415,9 +420,9 @@ Go 语言注意事项：
 2. 设置 launch.json 配置文件
    [参考地址](https://chai2010.cn/advanced-go-programming-book/ch3-asm/ch3-09-debug.html)
 
----
 
-优先级 运算符
+## 优先级 运算符
+---
 
 7 ^ !
 
@@ -433,9 +438,9 @@ Go 语言注意事项：
 
 1 ||
 
-————————————————
+## 替换标识符,也叫占位符
+---
 
-替换标识符,也叫占位符
 
 - %v 以值的默认格式打印，包括数组和结构
 - %+v 类似%v,但是输出结构体时会添加字段名
@@ -449,20 +454,8 @@ Go 语言注意事项：
 - %c byte 字节
 - %T 打印值的类型
 - %% 打印百分号本身
-
+## Go 语言中包含的所属有类型
 ---
-
-未能深刻理解的点：
-reflect、method、interface、文件读写、类型转换
-
-# 其他大佬的理解
-
-- [关于 Interface](https://sanyuesha.com/2017/07/22/how-to-understand-go-interface/)
--
-
----
-
-Go 语言中包含的所属有类型
 Bool
 Int
 Int8
@@ -490,7 +483,13 @@ String
 Struct
 UnsafePointer
 
----
+# 其他大佬的理解
+
+- [关于 Interface](https://sanyuesha.com/2017/07/22/how-to-understand-go-interface/)
+
+
+# 未能深刻理解的点：
+reflect、method、interface、文件读写、类型转换
 
 # 出于性能考虑的最佳实践和建议
 

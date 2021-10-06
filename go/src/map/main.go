@@ -19,6 +19,7 @@ func main() {
 	mapAssigned["two"] = 3
 
 	fmt.Println("mapLit[\"one\"]", mapLit["one"])           // 1
+	fmt.Println("mapCreated[\"key1\"]", mapCreated["key1"]) // 4.5
 	fmt.Println("mapCreated[\"key2\"]", mapCreated["key2"]) // 3.1415926
 	fmt.Println("mapAssigned[\"two\"]", mapAssigned["two"]) // 3
 	fmt.Println("mapLit[\"two\"]", mapLit["two"])           // 3

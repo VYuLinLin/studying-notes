@@ -2,6 +2,7 @@ package main
 
 import f "fmt"
 
+// rune_byte
 func main() {
 	first := "first"
 	f.Println([]rune(first)) // [102 105 114 115 116]
