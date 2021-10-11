@@ -22,7 +22,6 @@ func main() {
 
 	methodsExample()
 
-	timeExample()
 }
 
 type struct1 struct {
@@ -44,13 +43,16 @@ func makeStruct() {
 	fmt.Println("ms 的内存地址", &ms) // 0xc000006028
 }
 
-func selectorNotation() {
-	type myStruct struct{ i int }
-	var v = myStruct{2}
-	var p *myStruct
+type myStruct struct{ i int }
 
-	// v =  {2} p =  <nil>
-	fmt.Println("v = ", v, "p = ", p)
+func selectorNotation() {
+	var v = &myStruct{2}
+	var p *myStruct
+	var s myStruct
+
+	s.i = 333
+	fmt.Println("v = ", *v, "p = ", p) // v =  &{2} p =  <nil>
+	fmt.Printf("myStruct = %v \n", s)  // myStruct = {333}
 }
 
 // Person name
@@ -101,6 +103,9 @@ func tagTypeExample() {
 func refTag(tt TagType, i int) {
 	ttType := reflect.TypeOf(tt)
 	ixField := ttType.Field(i)
+	fmt.Println(ixField.Index)
+	fmt.Println(ixField.Name)
+	fmt.Println(ixField.Type)
 	fmt.Println(ixField.Tag)
 }
 
@@ -128,11 +133,11 @@ func inheritExample() {
 	outer.in1 = 5
 	outer.in2 = 20
 
-	fmt.Println(outer)
+	fmt.Println(outer) // &{6 7.5 60 {5 20} {0 0}}
 
 	// 使用结构体字面量
 	outer2 := outerS{6, 7.5, 60, innerS{5, 10}, innerSs{5, 10}}
-	fmt.Println(outer2)
+	fmt.Println(outer2) // {6 7.5 60 {5 10} {5 10}}
 }
 
 func setNameExample() {
@@ -143,7 +148,7 @@ func setNameExample() {
 		B
 	}
 	var c C
-	fmt.Println(c)     // {{0} {0 0}}
+	fmt.Println(c.b)   // {{0} {0 0}}
 	fmt.Println(c.B.a) // 0
 	fmt.Println(c.A.a) // 0
 }
@@ -178,24 +183,10 @@ func methodsExample() {
 	two2 := twoInts{3, 4}
 	fmt.Println(two2.AddThem()) // 7
 
-	fmt.Println(two1, two2) // &{12 10} {3 4}
+	fmt.Println(two1, two2)                                 // &{12 10} {3 4}
+	fmt.Println(reflect.TypeOf(two1), reflect.TypeOf(two2)) // *main.twoInts main.twoInts
 
 	fmt.Println(intVector{1, 2, 3}.Sum()) // 6
 	fmt.Println(time.Time(time.Now()).String())
 	fmt.Println(time.Now().String()[0:3])
-}
-
-type myTime struct {
-	time.Time
-}
-
-func (t myTime) first3Chars() string {
-	return t.Time.String()[:4]
-}
-func timeExample() {
-
-	m := myTime{time.Now()}
-
-	fmt.Println(m.String())      // 2020-07-31 14:36:40.017164 +0800 CST m=+0.020919201
-	fmt.Println(m.first3Chars()) // 2020
 }

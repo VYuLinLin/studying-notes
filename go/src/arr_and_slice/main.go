@@ -174,9 +174,16 @@ func bufferExample() {
 
 	// reflect.TypeOf() 可以检测任意变量
 	var a, b, c = "hh", 2, 0.232
-	fmt.Println(reflect.TypeOf(a)) // string
-	fmt.Println(reflect.TypeOf(b)) // int
-	fmt.Println(reflect.TypeOf(c)) // float64
+	slice := []int{}
+	fmt.Println(reflect.TypeOf(a))                              // string
+	fmt.Println(reflect.TypeOf(b))                              // int
+	fmt.Println(reflect.TypeOf(c))                              // float64
+	fmt.Println(reflect.TypeOf(slice))                          // []int
+	fmt.Println(reflect.ValueOf(slice).Type())                  // []int
+	fmt.Println(reflect.TypeOf(slice).Kind() == reflect.Slice)  // true
+	fmt.Println(reflect.ValueOf(slice).Kind() == reflect.Slice) // true
+	// reflect.ValueOf(slice).Type() 等同于 reflect.TypeOf(slice)
+	fmt.Println(reflect.ValueOf(slice).Type().Kind() == reflect.Slice) // true
 
 	items := []int{10, 20, 30, 40, 50}
 	for i := range items {

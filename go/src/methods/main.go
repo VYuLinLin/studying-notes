@@ -9,32 +9,37 @@ type Log struct {
 	msg string
 }
 
+// 聚合（或组合）
 type Customer struct {
 	Name string
-	log  *Log
+	Log
 }
 
 func main() {
 	c := new(Customer)
 	c.Name = "Victor"
-	c.log = new(Log)
-	c.log.msg = "1 - yes we can!"
+	c.Log = Log{}
+	c.Log.msg = "1 - yes we can!"
 
-	fmt.Println(c) // &{Victor 0xc00003e1f0}
+	fmt.Println(c) // &{Victor {1 - yes we can!}}
 
-	c = &Customer{"Vector", &Log{"2 - yes we can!"}}
+	c = &Customer{"Vector", Log{"2 - yes we can!"}}
 
-	fmt.Println(c.log.msg) // 2 - yes we can!
+	fmt.Println(c.Log.msg) // 2 - yes we can!
+	fmt.Println(c.Log)     // &{2 - yes we can!}
+	fmt.Println(c.Logs())  // 2 - yes we can!
 
-	fmt.Println(c.Log())
-	c.Log().Add("在我之后，世界会变得更美好")
-	fmt.Println(c.log.msg) // 在我之后，世界会变得更美好
+	c.Log.Add("在我之后，世界会变得更美好")
+	fmt.Println(c.Log.msg) // 在我之后，世界会变得更美好
 
-	fmt.Println(c.Log())
+	fmt.Println(c.Log)
 
 	extendExample()
 }
 
+func (l Log) Logs() string {
+	return l.msg
+}
 func (l *Log) Add(s string) {
 	l.msg = "\n" + s
 }
@@ -43,9 +48,9 @@ func (l *Log) Add(s string) {
 // 	return l.msg
 // }
 
-func (c *Customer) Log() *Log {
-	return c.log
-}
+// func (c *Customer) Log() *Log {
+// 	return c.log
+// }
 
 // ====================================
 type Base struct{}
