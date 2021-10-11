@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 func generate(ch chan int) {
@@ -29,6 +28,8 @@ func main() {
 		ch1 := make(chan int)
 		go filter(ch, ch1, prime)
 		ch = ch1
+		if prime > 100 {
+			break
+		}
 	}
-	time.Sleep(1e9)
 }

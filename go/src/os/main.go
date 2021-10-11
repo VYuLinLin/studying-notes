@@ -23,9 +23,9 @@ func main() {
 
 	// bufferFlagExample()
 
-	// sliceReadWrite()
+	sliceReadWrite()
 
-	interfaceWriteExample()
+	// interfaceWriteExample()
 }
 
 var NewLine = flag.Bool("n", false, "print newline")
@@ -36,7 +36,7 @@ const (
 )
 
 func flagExample() {
-	flag.PrintDefaults()
+	flag.PrintDefaults() //   -n    print newline
 	flag.Parse()
 	s := ""
 	for i := 0; i < flag.NArg(); i++ {
@@ -49,7 +49,8 @@ func flagExample() {
 
 		s += flag.Arg(i)
 	}
-	os.Stdout.WriteString(s)
+	os.Stdout.WriteString(s)                     // target.txt
+	os.Stdout.WriteString("\nflagExample end\n") // flagExample end
 }
 
 func cat(r *bufio.Reader) {
@@ -105,7 +106,9 @@ func sliceReadWrite() {
 	if flag.NArg() == 0 {
 		cat2(os.Stdin)
 	}
-
+	fmt.Println("参数：", flag.NArg()) // 参数： 1
+	b := []byte{'w', 'o', 'r', 'k', '\n'}
+	os.Stdout.Write(b) // work
 	for i := 0; i < flag.NArg(); i++ {
 		f, err := os.Open(flag.Arg(i))
 		if f == nil {

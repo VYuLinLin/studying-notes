@@ -14,5 +14,10 @@ func main() {
 	slice1 := arr[:]
 	slice1[2] = 222
 
-	fmt.Printf("arr = %v, slice1 = %v", arr, slice1)
+	fmt.Printf("arr = %v, slice1 = %v \n", arr, slice1)
+
+	// 使用new初始化slice不会分配内存地址，所以不能通过索引赋值，应该使用make初始化slice
+	slice2 := new([]int)
+	fmt.Printf("new created slice %v \n", slice2)
+	fmt.Printf("array created slice %v \n", slice1)
 }

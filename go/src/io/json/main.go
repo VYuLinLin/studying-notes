@@ -40,6 +40,8 @@ func main() {
 	defer file.Close()
 	enc := json.NewEncoder(file)
 	err := enc.Encode(vc)
+	// or
+	// err = enc.Encode(sourceData)
 	if err != nil {
 		log.Println("Error in encoding json")
 	}

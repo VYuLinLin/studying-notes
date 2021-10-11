@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"./parse"
 )
@@ -21,7 +22,7 @@ func test() {
 	fmt.Printf("after bad call\r\n")
 }
 func main() {
-	// fmt.Println(os.Getenv("USER"))
+	fmt.Println(os.Getenv("USER"))
 	fmt.Println("starting the program")
 	// panic("A severe error occurred: stopping the program!")
 	test()

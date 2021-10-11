@@ -61,8 +61,8 @@ func main() {
 	allNewBMWs := allCars.FindAll(func(car *Car) bool {
 		return (car.Manufacturer == "BMW") && (car.BuildYear > 2010)
 	})
-	f.Println("全部汽车：", allCars)
-	f.Println("新的宝马车：", allNewBMWs)
+	f.Printf("全部汽车：%v\n", allCars)
+	f.Printf("新的宝马车：%#v\n", allNewBMWs)
 
 	manufacturers := []string{"Ford", "Aston Martin", "Land Rover", "BMW", "Jaguar"}
 	sortedAppender, sortedCars := MakeSortedAppender(manufacturers)
@@ -71,4 +71,7 @@ func main() {
 
 	f.Println("排序后的汽车集合：", sortedCars)
 	f.Println("我们现在有", BMWCount, "辆宝马车")
+	for _, v := range sortedCars["BMW"] {
+		f.Println("拥有的宝马车是", v)
+	}
 }

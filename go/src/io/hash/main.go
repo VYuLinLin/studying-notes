@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/sha1"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -14,7 +15,6 @@ func main() {
 	fmt.Printf("结果：%x\n", hasher.Sum(b))
 	// 下面两种效果相同
 	fmt.Printf("结果：%d\n", hasher.Sum(b))
-	fmt.Println(hasher.Sum(b))
 
 	hasher.Reset()
 	data := []byte("we shall overcome!")
@@ -24,4 +24,7 @@ func main() {
 	}
 	checksum := hasher.Sum(b)
 	fmt.Printf("结果： %x\n", checksum)
+
+	e := errors.New("犯错了")
+	fmt.Println(e.Error())
 }

@@ -2,10 +2,13 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/binary"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
+	"strconv"
 )
 
 var (
@@ -37,7 +40,40 @@ var inputReader *bufio.Reader
 var inputs string
 var err error
 
+type read struct{}
+type reader interface {
+	Read(p []byte) (n int, err error)
+	ReadString(delim byte) (string, error)
+}
+type a io.Reader
+
+func (r *read) Read(p []byte) (n int, err error) {
+	fmt.Scanln(&firstName, &lastName)
+	i, _ := strconv.Atoi(firstName)
+	return i, nil
+}
+func (r *read) ReadString(delim byte) (string, error) {
+	i, _ := strconv.Atoi(firstName)
+	fmt.Println(i, firstName, delim)
+	d := BytesToInt([]byte{delim})
+	if i == d {
+		return "", nil
+	}
+	return firstName, nil
+}
+
+//字节转换成整形
+func BytesToInt(b []byte) int {
+	bytesBuffer := bytes.NewBuffer(b)
+
+	var x int32
+	binary.Read(bytesBuffer, binary.BigEndian, &x)
+
+	return int(x)
+}
 func bufioExample() {
+	// var a reader = &read{}
+	// inputReader = bufio.NewReader(a)
 	inputReader = bufio.NewReader(os.Stdin)
 	fmt.Println("请输入")
 

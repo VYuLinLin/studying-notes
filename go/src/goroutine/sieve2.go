@@ -39,6 +39,10 @@ func sieve() chan int {
 func main() {
 	primes := sieve()
 	for {
-		fmt.Println(<-primes)
+		prime := <-primes
+		fmt.Print(prime, " ")
+		if prime > 100 {
+			break
+		}
 	}
 }

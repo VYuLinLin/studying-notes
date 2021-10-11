@@ -39,11 +39,13 @@ func main() {
 	sq1 := &Square{5}
 	r := Rectangle{5, 3}
 
-	var areaIntf Shaper
-	areaIntf = sq1
+	var areaIntf Shaper = sq1
+	// 或者
+	areaIntfs := Shaper(r)
 
-	f.Println(sq1.Area())      // 25
-	f.Println(areaIntf.Area()) // 25
+	f.Println(sq1.Area())       // 25
+	f.Println(areaIntf.Area())  // 25
+	f.Println(areaIntfs.Area()) // 25
 
 	shapers := []Shaper{r, sq1}
 
@@ -54,10 +56,10 @@ func main() {
 
 	// 接口的类型断言
 	if t, ok := areaIntf.(*Square); ok {
-		f.Println("areaIntf的类型是", t) //  &{5}
+		f.Println("areaIntf的类型是Square", t) //  &{5}
 	}
-	if u, ok := areaIntf.(*Rectangle); ok {
-		f.Println("areaIntf的类型是", u)
+	if u, ok := areaIntfs.(Rectangle); ok {
+		f.Println("areaIntf的类型是Rectangle", u) // {5 3}
 	} else {
 		f.Println("areaIntf的类型不包含Shaper")
 	}
@@ -105,7 +107,7 @@ func strings() {
 	if !sort.IsSorted(a) {
 		panic("未能成功排序")
 	}
-	// 8 [ friday monday saturday sunday thursday tuesday wednday]esday]
+	// 8 [ friday monday saturday sunday thursday tuesday wednesday]
 	f.Println("此string数组已排序", len(a), a)
 }
 
