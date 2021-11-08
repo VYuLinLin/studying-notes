@@ -30,8 +30,8 @@ func main() {
 	json.Unmarshal(js, &sourceData)
 
 	// 以下两种打印，效果相同，值不同
-	fmt.Println(vc)
-	fmt.Println(sourceData)
+	fmt.Println(vc)         // {Chris Wang [0xc000076480 0xc0000764b0] none}
+	fmt.Println(sourceData) // {Chris Wang [0xc000076810 0xc000076840] none}
 	// 以下两种打印，效果相同，值不同
 	fmt.Printf("JSON format: %s\n", js)
 	fmt.Println("\n格式化后的json", string(js))

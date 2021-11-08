@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"time"
 )
 
@@ -38,12 +39,10 @@ func main() {
 	doSomethingElseForAWhile()
 	// <-ch1
 
-	// 终止一个协程
-	// runtime.Goexit()
-
 	// 简单的超时模板
 	timeout := make(chan bool, 1)
 	go func() {
+		runtime.Goexit() // Goexit终止调用它的协成，也就是当前goroutine
 		time.Sleep(1e9)
 		timeout <- true
 	}()

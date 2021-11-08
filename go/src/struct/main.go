@@ -75,10 +75,10 @@ func changeStruct() {
 
 	pers2 := new(Person)
 	pers2.firstName = "Chris"
-	pers2.lastName = "Woodward"
-	(*pers2).lastName = "Woodward" // 这是合法的
+	pers2.lastName = "Woodward1"
+	(*pers2).lastName = "Woodward2" // 这是合法的
 	upCase(pers2)
-	fmt.Println("pers2", pers2) // pers2 &{CHRIS WOODWARD}
+	fmt.Println("pers2", pers2) // pers2 &{CHRIS WOODWARD2}
 
 	pers3 := &Person{"Chris", "Woodward"}
 	upCase(pers3)

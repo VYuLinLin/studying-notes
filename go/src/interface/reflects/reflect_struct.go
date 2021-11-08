@@ -66,7 +66,10 @@ func main() {
 }
 
 func ModifyIt(p interface{}, fieldName string, val interface{}) interface{} {
-	value := reflect.ValueOf(p).Elem()
+	value := reflect.ValueOf(p)
+	if value.Kind() == reflect.Ptr {
+		value = value.Elem()
+	}
 	// newVal := reflect.ValueOf(&val).Elem().Interface().(string)
 	// or
 	newVal := val.(string)
@@ -77,7 +80,10 @@ func ModifyIt(p interface{}, fieldName string, val interface{}) interface{} {
 }
 
 func ModifyIt2(p interface{}, fieldName string, val interface{}) interface{} {
-	value := reflect.ValueOf(p).Elem()
+	value := reflect.ValueOf(p)
+	if value.Kind() == reflect.Ptr {
+		value = value.Elem()
+	}
 	var newVal string
 	if str, ok := val.(string); ok {
 		newVal = str
