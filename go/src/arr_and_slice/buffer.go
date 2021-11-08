@@ -24,7 +24,7 @@ func main() {
 	fmt.Println(bufStr) // 12345 - hello,world!
 
 	slice1, slice2 := bufStr[:5], bufStr[5:]
-	fmt.Printf("%v, %v", slice1, slice2) // 12345 - hello,world!
+	fmt.Printf("%v, %v", slice1, slice2) // 12345,  - hello,world!
 }
 
 var count int = 0
