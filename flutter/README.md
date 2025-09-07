@@ -71,7 +71,7 @@ Flutter 特点：
   4. final 只能设置一次的常量
   5. const 编译时常量 或 创建常量值
   6. _  通配符变量，本质是一个占位符，dart sdk 必须大于 3.7
-
+  7. Iterables 迭代方法：for-in、frist、last、firstWhere、singleWhere、any、every、where、takeWhile、skipWhile、map
 
 ## Dart 语言内置类型
 - 数字 int double，num 包括两种类型
